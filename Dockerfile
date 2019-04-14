@@ -1,5 +1,23 @@
-FROM ubuntu
-LABEL version="1.0" \
-      maintainer="Thomas Custer <tlwd01@gmail.com>"  
-RUN apt-get update
-CMD ["echo", "Hello World...! From my first docker image"]
+# Use an official node runtime as a parent image
+FROM node:8.15.1-alpine
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy the working directory contents into the container at /app
+COPY . /app
+
+# Install any needed packages specified in requirements.txt
+RUN pip install --trusted-host pypi.python.org -r requirements.txt
+
+# Make port 80 available to the world outside this container
+EXPOSE 80
+
+# Define environment variable
+ENV NAME World
+
+# # Run app.py when the container launches
+# CMD ["python", "app.py"]
+
+# # Completion message
+# CMD ["echo", "Complete!"]
